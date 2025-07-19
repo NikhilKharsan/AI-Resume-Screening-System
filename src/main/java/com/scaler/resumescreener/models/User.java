@@ -1,17 +1,20 @@
 package com.scaler.resumescreener.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +35,17 @@ public class User {
     @Column(nullable = false)
     private Role role = Role.USER;
 
-    public enum Role {
-        USER, ADMIN
-    }
+    @OneToMany(mappedBy = "createdBy", cascade = CascadeType.ALL)
+    @OrderBy("createdAt DESC")
+    private List<Job> createdJobs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OrderBy("createdAt DESC")
+    private List<Resume> resumes = new ArrayList<>();
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }

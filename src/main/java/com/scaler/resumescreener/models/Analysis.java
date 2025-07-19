@@ -3,6 +3,7 @@ package com.scaler.resumescreener.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,23 +24,26 @@ public class Analysis {
     @JoinColumn(name = "resume_id", nullable = false)
     private Resume resume;
 
-    @Lob
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String jobDescription;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "job_id", nullable = false)
+    private Job job;
 
     @Column(nullable = false)
-    private double compatibilityScore;
+    private Double compatibilityScore;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "analysis_id")
+    @ElementCollection
+    @CollectionTable(name = "analysis_strengths", joinColumns = @JoinColumn(name = "analysis_id"))
+    @Column(name = "strength")
     private List<String> strengths = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "analysis_id")
+    @ElementCollection
+    @CollectionTable(name = "analysis_improvements", joinColumns = @JoinColumn(name = "analysis_id"))
+    @Column(name = "improvement")
     private List<String> improvements = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "analysis_id")
+    @ElementCollection
+    @CollectionTable(name = "analysis_missing_skills", joinColumns = @JoinColumn(name = "analysis_id"))
+    @Column(name = "missing_skill")
     private List<String> missingSkills = new ArrayList<>();
 
     @Lob
@@ -53,4 +57,7 @@ public class Analysis {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
