@@ -2,11 +2,13 @@ package com.scaler.resumescreener.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class RegisterRequest {
+public class CandidateCreateRequest {
     @NotBlank(message = "First name is required")
     private String firstName;
 
@@ -17,7 +19,13 @@ public class RegisterRequest {
     @Email(message = "Email should be valid")
     private String email;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    private String password;
+    private String phone;
+
+    @Min(value = 0, message = "Experience cannot be negative")
+    private Integer totalExperience;
+
+    private String currentCompany;
+    private String currentDesignation;
+    private String location;
+    private List<String> skills;
 }

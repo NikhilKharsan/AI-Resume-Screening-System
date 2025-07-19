@@ -16,4 +16,5 @@ import java.util.List;
 public class GeminiRequest {
     private List<GeminiContent> contents;
     private GeminiGenerationConfig generationConfig;
+    private List<GeminiSafetySetting> safetySettings;
 }

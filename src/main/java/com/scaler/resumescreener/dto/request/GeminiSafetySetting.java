@@ -1,4 +1,4 @@
-package com.scaler.resumescreener.dto.Gemini;
+package com.scaler.resumescreener.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GeminiPart {
-    private String text;
+public class GeminiSafetySetting {
+    private String category;
+    private String threshold;
 }

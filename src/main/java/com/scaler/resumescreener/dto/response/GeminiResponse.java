@@ -12,4 +12,5 @@ import java.util.List;
 @AllArgsConstructor
 public class GeminiResponse {
     private List<GeminiCandidate> candidates;
+    private GeminiUsageMetadata usageMetadata;
 }

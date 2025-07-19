@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class GeminiCandidate {
     private GeminiContent content;
     private String finishReason;
+    private Integer index;
+    private GeminiSafetyRating[] safetyRatings;
 }

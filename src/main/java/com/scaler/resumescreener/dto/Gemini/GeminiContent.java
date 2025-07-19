@@ -13,4 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 public class GeminiContent {
     private List<GeminiPart> parts;
+    private String role; // "user" or "model"
 }
